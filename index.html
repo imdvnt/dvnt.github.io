@@ -31,14 +31,14 @@
                 font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                justify-content: center;
                 min-height: 100vh;
                 padding: 2rem;
+                align-items: center;
+                justify-content: center;
             }
 
             .container {
-                text-align: left;
+                text-align: center;
                 max-width: 480px;
             }
 
@@ -48,7 +48,7 @@
                 background: var(--accent);
                 border-radius: 50%;
                 display: inline-block;
-                margin-bottom: 2.5rem;
+                margin-top: 2.5rem;
                 animation: pulse 2s ease-in-out infinite;
             }
 
@@ -96,13 +96,13 @@
                 color: var(--muted);
             }
 
-            .status::before {
+            /*.status::before {
                 content: "";
                 width: 6px;
                 height: 6px;
                 background: var(--accent);
                 border-radius: 50%;
-            }
+            }*/
 
             footer {
                 position: fixed;
@@ -132,12 +132,13 @@
 
         <div style="display: flex; align-items: left; gap: 1rem">
             <a class="button" href="/profile">profile</a>
-            <div class="container" style="max-width: 480px">
-                <div class="dot"></div>
-                <h1>dvnt<span>.su</span></h1>
-                <p>domain is live</p>
-                <div class="status">everything works</div>
-            </div>
+        </div>
+
+        <div class="container" style="max-width: 480px">
+            <div class="dot"></div>
+        </div>
+        <div class="status">
+            <h1>dvnt<span>.su</span></h1>
         </div>
 
         <footer>dvnt.su</footer>
