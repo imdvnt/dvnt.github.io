@@ -26,6 +26,12 @@
                 align-self: center;
             }
         </style>
+
+        <script>
+            const profileInfo = document.querySelector("profile_info");
+            const profileImage = document.querySelector("profile_image");
+            profileImage.src = "resources/image.png";
+        </script>
     </head>
     <body>
         <div>
@@ -33,7 +39,8 @@
         </div>
 
         <profile_info>
-            <profile_image src="" alt="profile image"></profile_image>
+            <img src="resources/image.png" alt="profile image" />
+            <p>Profile info</p>
         </profile_info>
     </body>
 </html>
