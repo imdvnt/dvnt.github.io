@@ -14,9 +14,9 @@
             }
 
             :root {
-                --bg: #D1B155;
-                --fg: #55B1D1;
-                --accent: #F52525;
+                --bg: #d1b155;
+                --fg: #55b1d1;
+                --accent: #f52525;
                 --muted: #444;
             }
 
@@ -123,10 +123,26 @@
                 text-transform: uppercase;
                 padding: 25px;
             }
+
+            button {
+                background: var(--accent);
+                color: var(--fg);
+                border: none;
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                margin-bottom: 1rem;
+                cursor: pointer;
+            }
         </style>
+        <script>
+            function link_button() {
+                window.location.href = "";
+            }
+        </script>
     </head>
     <body>
-
         <div class="container">
             <div class="dot"></div>
             <h1>dvnt<span>.su</span></h1>
@@ -136,9 +152,9 @@
         <footer>dvnt.su</footer>
 
         <div>
-            <link href="https://dvnt.su/profile" target="_blank"
-                >profile</link
-            >
+            <button onclick="link_button(https://dvnt.su/profile)">
+                profile
+            </button>
         </div>
     </body>
 </html>
