@@ -111,6 +111,17 @@
                 color: #2a2a2a;
                 letter-spacing: 0.1em;
             }
+
+            profile_link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                text-decoration: none;
+                color: var(--fg);
+                font-size: 0.8rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+            }
         </style>
     </head>
     <body>
@@ -123,7 +134,9 @@
         <footer>dvnt.su</footer>
 
         <div>
-            <a href="https://dvnt.su/profile" target="_blank">profile</a>
+            <profile_link href="https://dvnt.su/profile" target="_blank"
+                >profile</profile_link
+            >
         </div>
     </body>
 </html>
