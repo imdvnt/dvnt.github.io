@@ -112,34 +112,60 @@
                 letter-spacing: 0.1em;
             }
 
+            menu {
+                position: fixed;
+                top: 1rem;
+                right: 2rem;
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+            }
+
+            home {
+                position: fixed;
+                top: 1rem;
+                left: 2rem;
+                text-align: center;
+                max-width: 480px;
+            }
+
             .button {
                 display: inline-block;
-                background: var(--accent);
+
+                background: transparent;
                 color: var(--fg);
-                border: none;
-                padding: 0.5rem 1rem;
+
+                border: 2px double var(--accent);
+
+                padding: 0.55rem 1.2rem;
+
                 font-size: 0.8rem;
                 letter-spacing: 0.1em;
                 text-transform: uppercase;
                 text-decoration: none;
-                cursor: pointer;
+
+                transition: 0.15s;
+            }
+
+            .button:hover {
+                background: rgba(59, 107, 107, 0.15);
+                border-color: var(--fg);
+            }
+
+            .button:active {
+                transform: translateY(2px);
             }
         </style>
         <script></script>
     </head>
     <body>
-        <div style="padding: 2rem"></div>
-
-        <div style="display: flex; align-items: left; gap: 1rem">
+        <menu>
             <a class="button" href="/profile">profile</a>
-        </div>
-
-        <div class="container" style="max-width: 480px">
-            <div class="dot"></div>
-        </div>
-        <div class="status">
-            <h1>dvnt<span>.su</span></h1>
-        </div>
+            <a class="button" href="/projects">projects</a>
+        </menu>
+        <home>
+            <a class="button" href="/home">home</a>
+        </home>
 
         <footer>dvnt.su</footer>
     </body>
