@@ -128,7 +128,7 @@ home {
     background: transparent;
     color: var(--fg);
 
-    border: 2px double var(--accent);
+    border: 5px double var(--accent);
 
     padding: 0.55rem 1.2rem;
 
