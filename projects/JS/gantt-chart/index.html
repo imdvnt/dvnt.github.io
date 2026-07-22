@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Диаграмма Ганта</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Диаграмма Ганта</h1>
+    <div class="overall-progress">
+      <span>Общий прогресс:</span>
+      <div class="overall-progress-track"><div class="overall-progress-fill" id="overallProgressBar"></div></div>
+      <span id="overallProgress">0%</span>
+    </div>
+  </div>
+  <div class="toolbar">
+    <div class="zoom-controls">
+      <span style="font-size:12px;color:var(--text-dim)">Масштаб:</span>
+      <select id="zoomSelect">
+        <option value="24">Крупный</option>
+        <option value="16">Средний</option>
+        <option value="10" selected>Мелкий</option>
+      </select>
+    </div>
+    <button id="btnToday">Сегодня</button>
+    <button id="btnImport">⬆ Импорт JSON</button>
+    <input type="file" id="fileInput" accept="application/json">
+    <button id="btnExport">⬇ Экспорт JSON</button>
+    <button id="btnClear" class="danger-outline">Очистить всё</button>
+  </div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="form-panel">
+      <div>
+        <label for="inpName">Название задачи</label>
+        <input type="text" id="inpName" placeholder="Например: Разработка ТЗ">
+      </div>
+      <div>
+        <label for="inpStart">Начало</label>
+        <input type="date" id="inpStart">
+      </div>
+      <div>
+        <label for="inpEnd">Окончание</label>
+        <input type="date" id="inpEnd">
+      </div>
+      <div>
+        <label for="inpProgress">Прогресс (%)</label>
+        <input type="number" id="inpProgress" min="0" max="100" value="0">
+      </div>
+      <div>
+        <label for="inpColor">Цвет</label>
+        <input type="color" id="inpColor" value="#5b8cff" style="height:36px;padding:2px;">
+      </div>
+      <div class="add-btn-wrap">
+        <button class="primary" id="btnAdd" style="width:100%;">+ Добавить</button>
+      </div>
+    </div>
+
+    <div id="ganttContainer" class="gantt-wrapper">
+      <!-- заполняется JS -->
+    </div>
+
+    <div id="emptyState" class="empty-state" style="display:none;">
+      Нет задач. Добавьте первую задачу выше или импортируйте JSON.
+    </div>
+  </div>
+
+  <footer>
+    Задач: <span id="taskCount">0</span> &nbsp;•&nbsp; Данные автоматически сохраняются в этом браузере (localStorage). Используйте экспорт JSON, чтобы сделать резервную копию или перенести проект на другое устройство.
+  </footer>
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
