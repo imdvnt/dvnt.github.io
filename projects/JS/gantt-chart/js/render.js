@@ -1,5 +1,5 @@
 // ---------- Рендер диаграммы ----------
-import { diffDays, isWeekend, isSameDay, parseDate, daysFromToday, MONTHS_RU, DOW_RU } from './utils.js';
+import { diffDays, isWeekend, isSameDay, parseDate, daysFromToday, isoToDisplay, MONTHS_RU, DOW_RU } from './utils.js';
 import { makeBarDraggable } from './dragResize.js';
 import { moveTaskDates } from './state.js';
 
@@ -98,15 +98,19 @@ export function render(tasks, handlers) {
     const nameEl = document.createElement('span');
     nameEl.className = 'task-name';
     nameEl.textContent = t.name;
+    nameEl.title = 'Изменить';
+    nameEl.tabIndex = 0;
+    nameEl.setAttribute('role', 'button');
+    nameEl.onclick = () => handlers.onEdit(t.id);
+    nameEl.onkeydown = (e) => { if (e.key === 'Enter') handlers.onEdit(t.id); };
 
     const metaEl = document.createElement('span');
     metaEl.className = 'task-meta';
     const dur = diffDays(parseDate(t.start), parseDate(t.end)) + 1;
-    metaEl.textContent = `${dur} дн. · ${t.progress || 0}%`;
+    metaEl.textContent = `${isoToDisplay(t.start)} – ${isoToDisplay(t.end)} · ${dur} дн. · ${t.progress || 0}%`;
 
     info.appendChild(nameEl);
     info.appendChild(metaEl);
-    info.title = `${t.name} (${t.start} → ${t.end})`;
 
     const actions = document.createElement('span');
     actions.className = 'task-row-actions';
@@ -238,8 +242,9 @@ export function render(tasks, handlers) {
     bar.style.left = (offsetDays * dayWidth) + 'px';
     bar.style.width = Math.max(lengthDays * dayWidth - 4, dayWidth - 4) + 'px';
     bar.style.background = t.color || '#5b8cff';
-    bar.title = `${t.name}\n${t.start} → ${t.end}\nПрогресс: ${t.progress}%`;
+    bar.title = `${t.name}\n${isoToDisplay(t.start)} → ${isoToDisplay(t.end)}\nПрогресс: ${t.progress}%\n(двойной клик — редактировать)`;
     bar.tabIndex = 0;
+    bar.addEventListener('dblclick', () => handlers.onEdit(t.id));
 
     const fill = document.createElement('div');
     fill.className = 'progress-fill';

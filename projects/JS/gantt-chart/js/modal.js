@@ -2,6 +2,8 @@
 // Даёт нормальную форму с подписанными полями вместо цепочки prompt(),
 // и понятный диалог подтверждения вместо системного confirm().
 
+import { attachDateMask, isoToDisplay, displayToIso } from './utils.js';
+
 let activeModal = null;
 let lastFocused = null;
 
@@ -123,11 +125,11 @@ export function taskFormDialog(task) {
       <div class="field-row">
         <div class="field">
           <label for="mfStart">Начало</label>
-          <input type="date" id="mfStart">
+          <input type="text" id="mfStart">
         </div>
         <div class="field">
           <label for="mfEnd">Окончание</label>
-          <input type="date" id="mfEnd">
+          <input type="text" id="mfEnd">
         </div>
       </div>
       <div class="field-row">
@@ -160,10 +162,13 @@ export function taskFormDialog(task) {
     const colorEl = body.querySelector('#mfColor');
     const errorEl = body.querySelector('#mfError');
 
+    attachDateMask(startEl);
+    attachDateMask(endEl);
+
     if (isEdit) {
       nameEl.value = task.name;
-      startEl.value = task.start;
-      endEl.value = task.end;
+      startEl.value = isoToDisplay(task.start);
+      endEl.value = isoToDisplay(task.end);
       progressEl.value = task.progress;
       colorEl.value = task.color || '#5b8cff';
     }
@@ -179,14 +184,14 @@ export function taskFormDialog(task) {
 
     body.querySelector('#mfSave').addEventListener('click', () => {
       const name = nameEl.value.trim();
-      const start = startEl.value;
-      const end = endEl.value;
+      const start = displayToIso(startEl.value);
+      const end = displayToIso(endEl.value);
       const progress = Math.min(100, Math.max(0, parseInt(progressEl.value, 10) || 0));
       const color = colorEl.value;
 
       if (!name) { showError('Введите название задачи'); nameEl.focus(); return; }
-      if (!start || !end) { showError('Укажите даты начала и окончания'); return; }
-      if (new Date(end) < new Date(start)) { showError('Дата окончания раньше даты начала'); return; }
+      if (!start || !end) { showError('Даты в формате дд/мм/гггг, например 22/07/2026'); return; }
+      if (end < start) { showError('Дата окончания раньше даты начала'); return; }
 
       resolved = true;
       close();

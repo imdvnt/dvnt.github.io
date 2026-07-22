@@ -51,6 +51,43 @@ export function clamp(n, min, max) {
   return Math.min(max, Math.max(min, n));
 }
 
+// ---------- Формат дд/мм/гггг для отображения (внутри всё хранится как yyyy-mm-dd) ----------
+
+export function isoToDisplay(iso) {
+  const d = parseDate(iso);
+  if (!d) return '';
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  return `${day}/${month}/${d.getFullYear()}`;
+}
+
+// Возвращает yyyy-mm-dd или null, если строка вида "дд/мм/гггг" невалидна
+export function displayToIso(str) {
+  if (typeof str !== 'string') return null;
+  const m = str.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!m) return null;
+  const day = Number(m[1]), month = Number(m[2]), year = Number(m[3]);
+  const date = new Date(year, month - 1, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+  return fmtDate(date);
+}
+
+// Превращает обычный текстовый input в поле с маской дд/мм/гггг —
+// пользователь просто печатает цифры, слэши подставляются сами.
+export function attachDateMask(input) {
+  input.setAttribute('placeholder', 'дд/мм/гггг');
+  input.setAttribute('maxlength', '10');
+  input.setAttribute('inputmode', 'numeric');
+  input.setAttribute('autocomplete', 'off');
+  input.addEventListener('input', () => {
+    const digits = input.value.replace(/\D/g, '').slice(0, 8);
+    let out = digits.slice(0, 2);
+    if (digits.length >= 3) out += '/' + digits.slice(2, 4);
+    if (digits.length >= 5) out += '/' + digits.slice(4, 8);
+    input.value = out;
+  });
+}
+
 export function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;

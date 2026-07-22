@@ -5,7 +5,7 @@
 // Раньше render() дёргался на каждый mousemove, что могло подтормаживать
 // на больших диаграммах и пересоздавало DOM прямо во время жеста.
 
-import { diffDays, fmtDate, parseDate } from './utils.js';
+import { diffDays, fmtDate, parseDate, isoToDisplay } from './utils.js';
 
 export function makeBarDraggable(bar, task, rangeStart, dayW, onCommit) {
   let mode = null; // 'move' | 'resize-left' | 'resize-right'
@@ -67,7 +67,7 @@ export function makeBarDraggable(bar, task, rangeStart, dayW, onCommit) {
 
     bar.style.left = (newStartDays * dayW) + 'px';
     bar.style.width = Math.max((newEndDays - newStartDays + 1) * dayW - 4, dayW - 4) + 'px';
-    tip.textContent = `${pendingStart} → ${pendingEnd}`;
+    tip.textContent = `${isoToDisplay(pendingStart)} → ${isoToDisplay(pendingEnd)}`;
   }
 
   function onUp() {

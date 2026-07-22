@@ -1,4 +1,4 @@
-import { fmtDate, daysFromToday, isValidDateStr, clamp, parseDate } from './utils.js';
+import { fmtDate, daysFromToday, clamp, isoToDisplay, displayToIso, attachDateMask, isValidDateStr } from './utils.js';
 import * as state from './state.js';
 import { render, setDayWidth, scrollToToday } from './render.js';
 import { confirmDialog, taskFormDialog } from './modal.js';
@@ -45,26 +45,28 @@ function initAddForm() {
   const progressEl = document.getElementById('inpProgress');
   const colorEl = document.getElementById('inpColor');
 
-  startEl.value = fmtDate(daysFromToday(0));
-  endEl.value = fmtDate(daysFromToday(5));
+  attachDateMask(startEl);
+  attachDateMask(endEl);
+  startEl.value = isoToDisplay(fmtDate(daysFromToday(0)));
+  endEl.value = isoToDisplay(fmtDate(daysFromToday(5)));
 
   document.getElementById('btnAdd').addEventListener('click', () => {
     const name = nameEl.value.trim();
-    const start = startEl.value;
-    const end = endEl.value;
+    const start = displayToIso(startEl.value);
+    const end = displayToIso(endEl.value);
     const progress = clamp(parseInt(progressEl.value, 10) || 0, 0, 100);
     const color = colorEl.value;
 
     if (!name) { showToast('Введите название задачи', 'error'); nameEl.focus(); return; }
-    if (!isValidDateStr(start) || !isValidDateStr(end)) { showToast('Проверьте даты начала и окончания', 'error'); return; }
-    if (parseDate(end) < parseDate(start)) { showToast('Дата окончания раньше даты начала', 'error'); return; }
+    if (!start || !end) { showToast('Даты в формате дд/мм/гггг, например 22/07/2026', 'error'); return; }
+    if (end < start) { showToast('Дата окончания раньше даты начала', 'error'); return; }
 
     state.addTask({ name, start, end, progress, color });
     showToast(`Задача «${name}» добавлена`, 'success');
 
     nameEl.value = '';
-    startEl.value = fmtDate(daysFromToday(0));
-    endEl.value = fmtDate(daysFromToday(5));
+    startEl.value = isoToDisplay(fmtDate(daysFromToday(0)));
+    endEl.value = isoToDisplay(fmtDate(daysFromToday(5)));
     progressEl.value = 0;
     nameEl.focus();
   });
