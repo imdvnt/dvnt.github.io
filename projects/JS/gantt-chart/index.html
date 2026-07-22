@@ -26,7 +26,6 @@
         <option value="10" selected>Мелкий</option>
       </select>
     </div>
-    <button id="btnToday">Сегодня</button>
     <button id="btnImport">⬆ Импорт JSON</button>
     <input type="file" id="fileInput" accept="application/json">
     <button id="btnExport">⬇ Экспорт JSON</button>
@@ -39,7 +38,7 @@
     <div class="form-panel">
       <div>
         <label for="inpName">Название задачи</label>
-        <input type="text" id="inpName" placeholder="Например: Разработка ТЗ">
+        <input type="text" id="inpName" placeholder="">
       </div>
       <div>
         <label for="inpStart">Начало</label>
@@ -66,14 +65,7 @@
       <!-- заполняется JS -->
     </div>
 
-    <div id="emptyState" class="empty-state" style="display:none;">
-      Нет задач. Добавьте первую задачу выше или импортируйте JSON.
-    </div>
   </div>
-
-  <footer>
-    Задач: <span id="taskCount">0</span> &nbsp;•&nbsp; Данные автоматически сохраняются в этом браузере (localStorage). Используйте экспорт JSON, чтобы сделать резервную копию или перенести проект на другое устройство.
-  </footer>
 </main>
 
 <script type="module" src="js/main.js"></script>
