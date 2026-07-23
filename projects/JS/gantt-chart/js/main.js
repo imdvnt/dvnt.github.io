@@ -1,6 +1,6 @@
-import { fmtDate, daysFromToday, clamp, isoToDisplay, displayToIso, attachDateMask, isValidDateStr } from './utils.js';
+import { fmtDate, daysFromToday, clamp, isoToDisplay, displayToIso, attachDateMask, isValidDateStr, debounce } from './utils.js';
 import * as state from './state.js';
-import { render, setDayWidth, scrollToToday } from './render.js';
+import { render } from './render.js';
 import { confirmDialog, taskFormDialog } from './modal.js';
 import { showToast } from './toast.js';
 
@@ -113,7 +113,7 @@ function importJSON(file) {
           start: item.start,
           end: item.end,
           progress: clamp(parseInt(item.progress, 10) || 0, 0, 100),
-          color: item.color || '#5b8cff'
+          color: item.color || '#4ade80'
         };
       });
 
@@ -138,23 +138,6 @@ function initToolbar() {
     if (file) importJSON(file);
     e.target.value = '';
   });
-
-  document.getElementById('btnClear').addEventListener('click', async () => {
-    if (state.getTasks().length === 0) return;
-    const ok = await confirmDialog('Удалить все задачи без возможности восстановления?', {
-      confirmText: 'Удалить всё', danger: true
-    });
-    if (!ok) return;
-    state.clearTasks();
-    showToast('Все задачи удалены', 'info');
-  });
-
-  document.getElementById('zoomSelect').addEventListener('change', (e) => {
-    setDayWidth(parseInt(e.target.value, 10));
-    rerender();
-  });
-
-  document.getElementById('btnToday').addEventListener('click', scrollToToday);
 }
 
 // ---------- Инициализация ----------
@@ -163,4 +146,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initToolbar();
   state.subscribe(rerender);
   rerender();
+  window.addEventListener('resize', debounce(rerender, 150));
 });

@@ -1,22 +1,21 @@
 // ---------- Рендер диаграммы ----------
+// Ширина дня подбирается автоматически под ширину окна: чем меньше дней в
+// диапазоне, тем шире клетки, чтобы сетка всегда доходила до правого края
+// карточки, а не обрывалась на середине широкого экрана. Если дней слишком
+// много и даже минимальная ширина не помещается — появляется горизонтальный
+// скролл (как и раньше).
 import { diffDays, isWeekend, isSameDay, parseDate, daysFromToday, isoToDisplay, MONTHS_RU, DOW_RU } from './utils.js';
 import { makeBarDraggable } from './dragResize.js';
 import { moveTaskDates } from './state.js';
+
+const MIN_DAY_WIDTH = 28;
+const MAX_DAY_WIDTH = 110;
 
 const container = document.getElementById('ganttContainer');
 const emptyState = document.getElementById('emptyState');
 const taskCountEl = document.getElementById('taskCount');
 const overallProgressEl = document.getElementById('overallProgress');
 const overallProgressBarEl = document.getElementById('overallProgressBar');
-const todayBtn = document.getElementById('btnToday');
-
-let currentDayWidth = 10;
-let currentRangeStart = null;
-let scrollEl = null;
-
-export function setDayWidth(px) {
-  currentDayWidth = px;
-}
 
 function getRange(tasks) {
   if (tasks.length === 0) {
@@ -46,13 +45,6 @@ function computeOverallProgress(tasks) {
   return totalDuration ? Math.round((doneDuration / totalDuration) * 100) : 0;
 }
 
-export function scrollToToday() {
-  if (!scrollEl || !currentRangeStart) return;
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  const offset = diffDays(currentRangeStart, today) * currentDayWidth;
-  scrollEl.scrollTo({ left: Math.max(offset - scrollEl.clientWidth / 2, 0), behavior: 'smooth' });
-}
-
 export function render(tasks, handlers) {
   taskCountEl.textContent = tasks.length;
   const overall = computeOverallProgress(tasks);
@@ -63,17 +55,13 @@ export function render(tasks, handlers) {
 
   if (tasks.length === 0) {
     emptyState.style.display = 'block';
-    todayBtn.disabled = true;
     return;
   }
   emptyState.style.display = 'none';
-  todayBtn.disabled = false;
 
   const { start, end } = getRange(tasks);
-  currentRangeStart = start;
   const totalDays = diffDays(start, end) + 1;
   const today = new Date(); today.setHours(0, 0, 0, 0);
-  const dayWidth = currentDayWidth;
 
   // --- Левая колонка со списком задач ---
   const taskList = document.createElement('div');
@@ -144,13 +132,21 @@ export function render(tasks, handlers) {
     taskList.appendChild(row);
   });
 
+  // Список уже добавляем в контейнер, чтобы измерить реально доступную
+  // ширину под временную шкалу (зависит от брейкпоинта в CSS).
+  container.appendChild(taskList);
+
+  const containerWidth = container.clientWidth || window.innerWidth;
+  const taskListWidth = taskList.getBoundingClientRect().width || 250;
+  const availableWidth = Math.max(containerWidth - taskListWidth, 200);
+  const dayWidth = Math.min(MAX_DAY_WIDTH, Math.max(MIN_DAY_WIDTH, Math.floor(availableWidth / totalDays)));
+
   // --- Правая часть: временная шкала ---
   const timeline = document.createElement('div');
   timeline.className = 'timeline';
 
   const scroll = document.createElement('div');
   scroll.className = 'timeline-scroll';
-  scrollEl = scroll;
 
   const totalWidth = totalDays * dayWidth;
 
@@ -198,17 +194,13 @@ export function render(tasks, handlers) {
     if (isWeekend(d)) cell.classList.add('weekend');
     if (isSameDay(d, today)) cell.classList.add('today');
     cell.style.width = dayWidth + 'px';
-    if (dayWidth >= 16) {
-      const num = document.createElement('div');
-      num.textContent = d.getDate();
-      const dow = document.createElement('div');
-      dow.className = 'dow';
-      dow.textContent = DOW_RU[d.getDay()];
-      cell.appendChild(num);
-      cell.appendChild(dow);
-    } else {
-      cell.textContent = d.getDate();
-    }
+    const num = document.createElement('div');
+    num.textContent = d.getDate();
+    const dow = document.createElement('div');
+    dow.className = 'dow';
+    dow.textContent = DOW_RU[d.getDay()];
+    cell.appendChild(num);
+    cell.appendChild(dow);
     headerRow.appendChild(cell);
     cursor.setDate(cursor.getDate() + 1);
   }
@@ -241,7 +233,7 @@ export function render(tasks, handlers) {
     bar.className = 'bar';
     bar.style.left = (offsetDays * dayWidth) + 'px';
     bar.style.width = Math.max(lengthDays * dayWidth - 4, dayWidth - 4) + 'px';
-    bar.style.background = t.color || '#5b8cff';
+    bar.style.background = t.color || '#4ade80';
     bar.title = `${t.name}\n${isoToDisplay(t.start)} → ${isoToDisplay(t.end)}\nПрогресс: ${t.progress}%\n(двойной клик — редактировать)`;
     bar.tabIndex = 0;
     bar.addEventListener('dblclick', () => handlers.onEdit(t.id));
@@ -269,6 +261,5 @@ export function render(tasks, handlers) {
   scroll.appendChild(body);
   timeline.appendChild(scroll);
 
-  container.appendChild(taskList);
   container.appendChild(timeline);
 }

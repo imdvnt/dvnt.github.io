@@ -1,16 +1,16 @@
 :root {
-  --bg: #0d0f14;
-  --panel: #151821;
-  --panel-2: #1a1e29;
-  --border: #2a2f3d;
+  --bg: #0a0c10;
+  --panel: #12141a;
+  --panel-2: #171a21;
+  --border: #262a35;
   --text: #e4e6ee;
-  --text-dim: #7d8298;
-  --accent: #5b8cff;
-  --accent-dim: #3a5cb8;
+  --text-dim: #767c8f;
+  --accent: #4ade80;
+  --accent-dim: #1f6b41;
   --danger: #ff6b6b;
   --warn: #ffb454;
-  --success: #6ee7b7;
-  --radius: 4px;
+  --success: #4ade80;
+  --radius: 0px;
   --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
@@ -20,6 +20,7 @@ body {
   margin: 0;
   font-family: var(--mono);
   font-size: 13px;
+  line-height: 1.5;
   background: var(--bg);
   color: var(--text);
 }
@@ -31,31 +32,31 @@ body {
 
 /* ---------- Шапка ---------- */
 header {
-  padding: 14px 20px;
+  padding: 16px 24px;
   background: var(--panel);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
 }
 
 .header-left {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 header h1 {
   font-size: 15px;
   margin: 0;
   font-weight: 600;
-  letter-spacing: .02em;
+  letter-spacing: .01em;
 }
 
 header h1::before {
-  content: '> ';
+  content: '$ ';
   color: var(--accent);
 }
 
@@ -69,7 +70,7 @@ header h1::before {
 
 .overall-progress-track {
   width: 110px;
-  height: 4px;
+  height: 3px;
   background: var(--panel-2);
   border: 1px solid var(--border);
 }
@@ -83,71 +84,61 @@ header h1::before {
 
 .toolbar {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
   align-items: center;
 }
 
 /* ---------- Элементы управления ---------- */
 button {
-  background: var(--panel-2);
+  background: transparent;
   color: var(--text);
   border: 1px solid var(--border);
-  padding: 7px 12px;
+  padding: 7px 14px;
   border-radius: var(--radius);
   cursor: pointer;
   font-family: var(--mono);
   font-size: 12px;
-  transition: background .1s, border-color .1s;
+  transition: background .1s, border-color .1s, color .1s;
 }
 
-button:hover { background: #232838; border-color: #3a4054; }
+button:hover { background: var(--panel-2); border-color: #3a4054; }
 button:disabled { opacity: .35; cursor: not-allowed; }
 
 button.primary {
-  background: var(--accent-dim);
+  background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: #06120a;
+  font-weight: 600;
 }
-button.primary:hover { background: var(--accent); }
+button.primary:hover { background: #6bf29c; }
 
-button.danger-outline { color: var(--danger); border-color: var(--border); }
+button.danger-outline { color: var(--danger); }
 button.danger-outline:hover { border-color: var(--danger); background: rgba(255,107,107,.08); }
 
 button.danger-solid {
   background: var(--danger);
   border-color: var(--danger);
-  color: #fff;
+  color: #1a0505;
+  font-weight: 600;
 }
-button.danger-solid:hover { background: #ff8080; }
+button.danger-solid:hover { background: #ff8787; }
 
 input[type="file"] { display: none; }
 
-select {
-  background: var(--panel-2);
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 6px 8px;
-  border-radius: var(--radius);
-  font-family: var(--mono);
-  font-size: 12px;
-}
-
-main { padding: 20px; }
+main { padding: 24px; }
 
 .card {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
 }
 
 /* ---------- Форма добавления ---------- */
 .form-panel {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
-  gap: 10px;
-  padding: 14px;
+  gap: 12px;
+  padding: 16px;
   border-bottom: 1px solid var(--border);
   background: var(--panel-2);
 }
@@ -156,9 +147,9 @@ main { padding: 20px; }
   font-size: 10px;
   color: var(--text-dim);
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   text-transform: uppercase;
-  letter-spacing: .04em;
+  letter-spacing: .06em;
 }
 
 .form-panel input {
@@ -166,7 +157,7 @@ main { padding: 20px; }
   background: var(--bg);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 7px 9px;
+  padding: 8px 10px;
   border-radius: var(--radius);
   font-family: var(--mono);
   font-size: 12px;
@@ -180,7 +171,7 @@ main { padding: 20px; }
 }
 
 /* ---------- Диаграмма ---------- */
-.gantt-wrapper { display: flex; }
+.gantt-wrapper { display: flex; width: 100%; }
 
 .task-list {
   min-width: 250px;
@@ -194,11 +185,11 @@ main { padding: 20px; }
   height: 40px;
   display: flex;
   align-items: center;
-  padding: 0 12px;
+  padding: 0 14px;
   font-size: 11px;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: .04em;
+  letter-spacing: .06em;
   border-bottom: 1px solid var(--border);
   background: var(--panel-2);
   position: sticky;
@@ -213,23 +204,24 @@ main { padding: 20px; }
 }
 
 .task-row {
-  height: 44px;
+  height: 46px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 0 14px;
   border-bottom: 1px solid var(--border);
   gap: 8px;
 }
 
-.task-row:hover { background: #181c27; }
+.task-row:hover { background: var(--panel-2); }
 
 .task-info {
   display: flex;
   flex-direction: column;
   min-width: 0;
   flex: 1;
-  line-height: 1.3;
+  line-height: 1.35;
+  gap: 1px;
 }
 
 .task-name {
@@ -261,13 +253,13 @@ main { padding: 20px; }
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-dim);
-  padding: 3px 6px;
+  padding: 4px 7px;
   font-size: 12px;
   cursor: pointer;
   border-radius: var(--radius);
   font-family: var(--mono);
 }
-.icon-btn:hover { color: var(--text); border-color: var(--border); background: var(--panel-2); }
+.icon-btn:hover { color: var(--text); border-color: var(--border); }
 .icon-btn.del:hover { color: var(--danger); border-color: var(--danger); }
 
 .timeline { position: relative; flex: 1; overflow: hidden; min-width: 0; }
@@ -287,7 +279,7 @@ main { padding: 20px; }
 
 .day-cell .dow { font-size: 8px; opacity: .7; }
 .day-cell.weekend { background: rgba(255,255,255,0.02); }
-.day-cell.today { background: rgba(91,140,255,0.14); color: var(--accent); font-weight: 600; }
+.day-cell.today { background: rgba(74,222,128,0.14); color: var(--accent); font-weight: 600; }
 
 .month-row { display: flex; height: 20px; border-bottom: 1px solid var(--border); }
 
@@ -304,7 +296,7 @@ main { padding: 20px; }
 .timeline-body { position: relative; }
 
 .grid-row {
-  height: 44px;
+  height: 46px;
   border-bottom: 1px solid var(--border);
   position: relative;
   display: flex;
@@ -312,21 +304,21 @@ main { padding: 20px; }
 
 .grid-cell { flex-shrink: 0; border-right: 1px solid var(--border); }
 .grid-cell.weekend { background: rgba(255,255,255,0.02); }
-.grid-cell.today { background: rgba(91,140,255,0.08); }
+.grid-cell.today { background: rgba(74,222,128,0.08); }
 
 /* ---------- Полоса задачи ---------- */
 .bar {
   position: absolute;
-  top: 8px;
+  top: 9px;
   height: 28px;
   border-radius: var(--radius);
   background: var(--accent);
-  border: 1px solid rgba(0,0,0,.25);
   display: flex;
   align-items: center;
   padding: 0 9px;
   font-size: 11px;
-  color: #fff;
+  color: #06120a;
+  font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -334,12 +326,12 @@ main { padding: 20px; }
   user-select: none;
 }
 .bar:active { cursor: grabbing; }
-.bar.dragging { outline: 1px solid #fff; z-index: 5; }
+.bar.dragging { outline: 1px solid var(--text); z-index: 5; }
 
 .bar .progress-fill {
   position: absolute;
   left: 0; top: 0; bottom: 0;
-  background: rgba(255,255,255,0.22);
+  background: rgba(0,0,0,0.18);
 }
 
 .bar .label { position: relative; z-index: 1; }
@@ -378,23 +370,21 @@ main { padding: 20px; }
 }
 
 footer {
-  padding: 12px 20px;
+  padding: 14px 24px;
   color: var(--text-dim);
   font-size: 11px;
 }
 
-.zoom-controls { display: flex; gap: 4px; align-items: center; }
-
 ::-webkit-scrollbar { height: 9px; width: 9px; }
 ::-webkit-scrollbar-track { background: var(--panel); }
-::-webkit-scrollbar-thumb { background: #333a4d; border-radius: var(--radius); }
-::-webkit-scrollbar-thumb:hover { background: #454e66; }
+::-webkit-scrollbar-thumb { background: #2d3242; border-radius: var(--radius); }
+::-webkit-scrollbar-thumb:hover { background: #3f4658; }
 
 /* ---------- Тосты ---------- */
 .toast-stack {
   position: fixed;
-  bottom: 18px;
-  right: 18px;
+  bottom: 20px;
+  right: 20px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -407,7 +397,7 @@ footer {
   border: 1px solid var(--border);
   border-left: 2px solid var(--accent);
   color: var(--text);
-  padding: 9px 12px;
+  padding: 10px 13px;
   border-radius: var(--radius);
   font-size: 12px;
   opacity: 0;
@@ -424,7 +414,7 @@ footer {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.6);
+  background: rgba(0,0,0,.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -444,13 +434,13 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--border);
 }
 
 .modal-header h2 { font-size: 13px; margin: 0; font-weight: 600; }
 
-.modal-body { padding: 14px; }
+.modal-body { padding: 16px; }
 
 .modal-message { margin: 0 0 4px; font-size: 12px; color: var(--text); line-height: 1.5; }
 
@@ -458,24 +448,24 @@ footer {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
-.field { margin-bottom: 10px; }
+.field { margin-bottom: 12px; }
 .field label {
   font-size: 10px;
   color: var(--text-dim);
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   text-transform: uppercase;
-  letter-spacing: .04em;
+  letter-spacing: .06em;
 }
 .field input {
   width: 100%;
   background: var(--bg);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 7px 9px;
+  padding: 8px 10px;
   border-radius: var(--radius);
   font-family: var(--mono);
   font-size: 12px;
@@ -492,7 +482,7 @@ footer {
 
 /* ---------- Адаптив ---------- */
 @media (max-width: 720px) {
-  header { padding: 12px 14px; }
+  header { padding: 12px 16px; }
   main { padding: 12px; }
   .form-panel { grid-template-columns: 1fr 1fr; }
   .form-panel > div:first-child { grid-column: 1 / -1; }

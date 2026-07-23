@@ -51,6 +51,14 @@ export function clamp(n, min, max) {
   return Math.min(max, Math.max(min, n));
 }
 
+export function debounce(fn, wait) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
+
 // ---------- Формат дд/мм/гггг для отображения (внутри всё хранится как yyyy-mm-dd) ----------
 
 export function isoToDisplay(iso) {

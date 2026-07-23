@@ -139,7 +139,7 @@ export function taskFormDialog(task) {
         </div>
         <div class="field">
           <label for="mfColor">Цвет</label>
-          <input type="color" id="mfColor" value="#5b8cff" style="height:36px;padding:2px;">
+          <input type="color" id="mfColor" value="#4ade80" style="height:36px;padding:2px;">
         </div>
       </div>
       <p class="field-error" id="mfError" hidden></p>
@@ -170,7 +170,7 @@ export function taskFormDialog(task) {
       startEl.value = isoToDisplay(task.start);
       endEl.value = isoToDisplay(task.end);
       progressEl.value = task.progress;
-      colorEl.value = task.color || '#5b8cff';
+      colorEl.value = task.color || '#4ade80';
     }
 
     function showError(msg) {

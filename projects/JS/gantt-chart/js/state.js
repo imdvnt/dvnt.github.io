@@ -3,9 +3,9 @@ import { uid, fmtDate, daysFromToday, parseDate } from './utils.js';
 import { loadTasks, saveTasks } from './storage.js';
 
 const DEMO_TASKS = [
-  { id: uid(), name: 'Анализ требований', start: fmtDate(daysFromToday(0)), end: fmtDate(daysFromToday(3)), progress: 100, color: '#6ee7b7' },
-  { id: uid(), name: 'Проектирование', start: fmtDate(daysFromToday(3)), end: fmtDate(daysFromToday(8)), progress: 60, color: '#5b8cff' },
-  { id: uid(), name: 'Разработка', start: fmtDate(daysFromToday(8)), end: fmtDate(daysFromToday(18)), progress: 20, color: '#5b8cff' },
+  { id: uid(), name: 'Анализ требований', start: fmtDate(daysFromToday(0)), end: fmtDate(daysFromToday(3)), progress: 100, color: '#4ade80' },
+  { id: uid(), name: 'Проектирование', start: fmtDate(daysFromToday(3)), end: fmtDate(daysFromToday(8)), progress: 60, color: '#4ade80' },
+  { id: uid(), name: 'Разработка', start: fmtDate(daysFromToday(8)), end: fmtDate(daysFromToday(18)), progress: 20, color: '#4ade80' },
   { id: uid(), name: 'Тестирование', start: fmtDate(daysFromToday(16)), end: fmtDate(daysFromToday(22)), progress: 0, color: '#ffb454' }
 ];
 
@@ -60,11 +60,6 @@ export function duplicateTask(id) {
   tasks.push(copy);
   notify();
   return copy;
-}
-
-export function clearTasks() {
-  tasks = [];
-  notify();
 }
 
 export function replaceAllTasks(newTasks) {
